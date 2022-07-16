@@ -22,6 +22,16 @@ class VaccineController {
     @GetMapping
     fun getAll(): Any = ResponseEntity.ok(petRepository.findAll())
 
+    @GetMapping("from-pet/{id}")
+    fun getByPetId(@PathVariable("id") id: Long): ResponseEntity<Any> {
+        val pet = petRepository.findByIdOrNull(id) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(mapOf(Pair("error", "pet not found")))
+
+        val vaccines = vaccineRepository.getByPetId(pet.id)
+
+        return ResponseEntity.ok(vaccines)
+    }
+
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") id: Long): Any {
         val vaccine = vaccineRepository.findByIdOrNull(id) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND)
