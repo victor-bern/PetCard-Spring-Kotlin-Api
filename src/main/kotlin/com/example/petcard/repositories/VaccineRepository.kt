@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
 interface VaccineRepository : JpaRepository<Vaccine, Long> {
-    @Query("SELECT * FROM vaccine WHERE petId = ?1", nativeQuery = true)
+    @Query("SELECT * FROM vaccine WHERE pet_id = ?1", nativeQuery = true)
     fun getByPetId(petId: Long): List<Vaccine>
 }
